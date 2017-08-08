@@ -6,7 +6,7 @@ from subprocess import STDOUT, CalledProcessError, check_output
 import sympy as sp
 import tempfile
 import re
-import compilation_utils
+from . import compilation_utils
 import logging
 import time
 

@@ -1,6 +1,6 @@
 from bayesian_pdes import pairwise
 
-import compilation_utils
+from . import compilation_utils
 from bayesian_pdes.operator_compilation.sympy_helpers import sympy_function, n_arg_applier
 
 
