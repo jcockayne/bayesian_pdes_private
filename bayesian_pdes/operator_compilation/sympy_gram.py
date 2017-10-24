@@ -9,6 +9,7 @@ import re
 from . import compilation_utils
 import logging
 import time
+import six
 
 __HEADER__ = """cimport numpy as np
 import numpy as np
@@ -154,7 +155,7 @@ def indent(code, n=1):
 
 
 def randomword(length):
-    return ''.join(random.choice(string.lowercase) for _ in range(length))
+    return ''.join(random.choice(string.ascii_lowercase) for _ in range(length))
 
 
 def compile_cython(cython, root_dir_name=None, clean=True):
@@ -165,7 +166,7 @@ def compile_cython(cython, root_dir_name=None, clean=True):
     dir_name = os.path.join(root_dir_name, mod_name)
     os.mkdir(dir_name)
 
-    with tempfile.NamedTemporaryFile(dir=dir_name, delete=False, suffix='.pyx') as f:
+    with tempfile.NamedTemporaryFile(mode='w', dir=dir_name, delete=False, suffix='.pyx') as f:
         to_import = os.path.splitext(os.path.basename(f.name))[0]
         f.write(cython)
     with open(os.path.join(dir_name, 'setup.py'), 'w') as f:
