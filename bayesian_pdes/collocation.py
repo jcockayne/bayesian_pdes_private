@@ -101,12 +101,15 @@ def compute_operator_matrix(operators, operators_bar, points, points_bar, op_sys
     return np.row_stack(rows)
 
 
-def calc_LLbar(operators, operators_bar, observations, op_cache, fun_args):
+def calc_LLbar(operators, operators_bar, observations, op_cache, fun_args, nugget=None):
     points = [p[0] for p in observations]
 
     op_mat = compute_operator_matrix(operators, operators_bar, points, points, op_cache, fun_args)
     if not any(len(o) == 3 for o in observations):
-        return op_mat
+        if nugget is not None:
+            return op_mat + nugget * np.eye(op_mat.shape[0])
+        else:
+            return op_mat
 
     # adjust for covariance of observations
     covs = []
